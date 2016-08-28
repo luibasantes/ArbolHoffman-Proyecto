@@ -26,7 +26,11 @@ public class ArbolHoffmanProyecto {
             System.out.print("1)Comprimir\n2)Descomprimir\n3)Salir\n☻♣:");
             opcion=sc.nextLine();
             if (opcion.equals("1")){
-                 
+                 String s = Utils.leerTexto("archivo");
+                 ArbolHuffman arbol = new ArbolHuffman();
+                 arbol.calcularArbol(Utils.calcularFrecuencias(s));
+                 HashMap<String,String> mapa = arbol.calcularCodigos();
+                 System.out.println(mapa);
             }else if(opcion.equals("2")){
                 
             }else if (opcion.equals("3")){

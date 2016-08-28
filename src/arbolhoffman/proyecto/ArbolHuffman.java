@@ -44,21 +44,23 @@ public class ArbolHuffman {
         }
         this.raiz=cola.poll();
     }
+    
     public HashMap<String,String> calcularCodigos(){
         HashMap<String,String> mapa = new HashMap<>();
-        Nodo nodo=raiz;
-        String binario="";
-        while(nodo.getDerecha()!=null){
-            
-            if(nodo.getIzquierda().esHoja()){                
-                //mapa.put((String)nodo.getIzquierda().getContenido(),binario+nodo.getIzquierda().getBinario());
-            }          
-            nodo = nodo.getDerecha();
-            //binario+=nodo.getBinario;
-            if(nodo.esHoja()){
-                mapa.put((String)nodo.getContenido(),binario);
-            }
+        String caract = raiz.getContenido();
+        for (String i : caract.split("")){
+            mapa.put(i, codigoIndividual(i,raiz));
         }
+        
         return mapa;
+    }
+    private String codigoIndividual(String caract,Nodo temp){
+        if(temp.esHoja()){
+            return "";
+        }else if (temp.getIzquierda().getContenido().contains(caract)){
+            return "0"+codigoIndividual(caract,temp.getIzquierda());
+        }else{
+            return "1" + codigoIndividual(caract,temp.getDerecha());
+        }
     }
 }
