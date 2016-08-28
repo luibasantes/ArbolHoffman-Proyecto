@@ -52,5 +52,8 @@ public class Nodo {
     public void setPeso(int Peso) {
         this.Peso = Peso;
     }
+    public boolean esHoja(){
+        return this.izquierda==null && this.derecha==null;
+    }
     
 }

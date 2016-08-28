@@ -46,7 +46,19 @@ public class ArbolHuffman {
     }
     public HashMap<String,String> calcularCodigos(){
         HashMap<String,String> mapa = new HashMap<>();
-        
+        Nodo nodo=raiz;
+        String binario="";
+        while(nodo.getDerecha()!=null){
+            
+            if(nodo.getIzquierda().esHoja()){                
+                //mapa.put((String)nodo.getIzquierda().getContenido(),binario+nodo.getIzquierda().getBinario());
+            }          
+            nodo = nodo.getDerecha();
+            //binario+=nodo.getBinario;
+            if(nodo.esHoja()){
+                mapa.put((String)nodo.getContenido(),binario);
+            }
+        }
         return mapa;
     }
 }
