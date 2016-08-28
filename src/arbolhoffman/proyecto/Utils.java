@@ -6,6 +6,7 @@
 package arbolhoffman.proyecto;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class Utils {
         String texto="";
         try
         {
-            File file = new File(archivo);
+            File file = new File(archivo+".txt");
             Scanner input = new Scanner(file);
             while (input.hasNext())
             {
@@ -61,6 +62,69 @@ public class Utils {
             }
         }
         
-        return hexa;
+        return hexa.toUpperCase();
+    }
+    public static String hexadecimalBinario (String hexa){
+        String binario="";
+        int count=0;
+        for(String i : hexa.split("")){
+            String s="";
+            if(!i.equals("-")){
+                s=Integer.toBinaryString(Integer.parseInt(i,16));
+                if(s.length()==1){
+                    binario+="000"+s;
+                }else if(s.length()==2){
+                    binario+="00"+s;
+                }else if(s.length()==3){
+                    binario+="0"+s;
+                }else{
+                    binario+=s;
+                }
+                
+            }else{
+                count++;
+            }
+        }
+        return binario.substring(0,binario.length()-count);
+    }
+    public static void guardarTexto (String archivo, String texto, HashMap<String,String> mapa){
+        try
+        {
+            PrintWriter file=new PrintWriter(archivo+".txt");
+            file.println(texto);
+            file.close();
+            PrintWriter file1=new PrintWriter(archivo+"_compres.txt");
+            String s="";
+            for(String keys : mapa.keySet()){
+                s+=keys+":"+mapa.get(keys)+"|";
+            }
+            file1.println(s.substring(0,s.length()-1));
+            file1.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Algo salio mal.(No se Guardo)");
+        }
+    }
+    public static HashMap<String,String> leerMapa (String archivo){
+        HashMap<String,String> mapa = new HashMap<>();
+        try{
+            File file = new File(archivo);
+            Scanner input = new Scanner(file);
+            while (input.hasNext())
+            {
+                String line = input.nextLine();
+                String[]a = line.split("|");
+                for(String i: a ){
+                    String []b=i.split(":");
+                    mapa.put(b[0],b[1]);
+                }
+            }
+            input.close();
+        }catch(Exception e){
+            System.out.println("Algo fallo al cargar.");
+        }
+        
+        return mapa;
     }
 }
